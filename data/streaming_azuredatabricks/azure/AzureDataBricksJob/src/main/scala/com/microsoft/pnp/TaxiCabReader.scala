@@ -27,6 +27,7 @@ object TaxiCabReader {
         val spark = SparkSession.builder().config("spark.master", "local[10]").getOrCreate()
         import spark.implicits._
 
+        spark.streams.addListener(new StreamingMetricsListener())
         // Taxi ride infra setup -
 
         val rideConnectionString = ConnectionStringBuilder(arguments.rideEventHubConnectionString)
