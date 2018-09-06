@@ -42,7 +42,7 @@
             <groupId>com.microsoft.azure</groupId>
             <artifactId>azure-eventhubs-spark_2.11</artifactId>
             <version>2.3.1</version>
-            <scope>provided</scope>
+            <!--<scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>org.geotools</groupId>
@@ -108,6 +108,15 @@
     </repositories>
 
     <build>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.zip</include>
+                </includes>
+            </resource>
+        </resources>
         <!--<sourceDirectory>src/main/scala</sourceDirectory>-->
         <!--<testSourceDirectory>src/test/scala</testSourceDirectory>-->
         <plugins>

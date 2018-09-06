@@ -13,19 +13,18 @@ import org.opengis.feature.Feature;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.expression.PropertyName;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import scala.Option;
+import scala.Serializable;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
-import scala.Option;
 
-public class GeoFinder {
+public class GeoFinder implements Serializable {
     private static final Logger logger = LoggerFactory.getLogger(GeoFinder.class);
 
     private FeatureSource featureSource;
@@ -40,7 +39,7 @@ public class GeoFinder {
         this.geometryFactory = new GeometryFactory();
     }
 
-//    public Optional<String> getNeighborhood(double longitude, double latitude) {
+    //    public Optional<String> getNeighborhood(double longitude, double latitude) {
     public Option<String> getNeighborhood(double longitude, double latitude) {
         logger.debug(String.format("Searching for coordinate (%f, %f)", longitude, latitude));
         Point point = this.geometryFactory.createPoint(new Coordinate(longitude, latitude));
@@ -52,10 +51,9 @@ public class GeoFinder {
                 if (iterator.hasNext()) {
                     Feature feature = iterator.next();
                     //return Optional.of(feature.getProperty("Name").getValue().toString());
-                    return Option.apply((String)feature.getProperty("Name").getValue());
+                    return Option.apply((String) feature.getProperty("Name").getValue());
                 }
-            }
-            finally {
+            } finally {
                 iterator.close();
             }
         } catch (IOException ex) {
